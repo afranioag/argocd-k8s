@@ -296,8 +296,21 @@ Verá: **"Olá Mundo!" com badge "ArgoCD Enabled ✓"**
 
 ### Teste 1: Mude a imagem no Git
 
-1. Edite `deployment.yml` — mude a tag da imagem para `:v3-new`
-2. Commit e push:
+Há duas formas de fazer este teste:
+
+#### Opção A — Teste Completo (recomendado para aprender)
+
+Se quiser ver tudo funcionando corretamente:
+
+1. **Buildar e fazer push da nova imagem** (em sua máquina):
+
+```bash
+docker build -t seu-usuario/app-argo-k8s:v3-new .
+docker push seu-usuario/app-argo-k8s:v3-new
+```
+
+2. **Edite `deployment.yml`** — mude a tag da imagem para `:v3-new`
+3. **Commit e push:**
 
 ```bash
 git add deployment.yml
@@ -305,7 +318,28 @@ git commit -m "bump image to v3-new"
 git push origin main
 ```
 
-3. **Aguarde 3 minutos** (ou force sync no dashboard) — ArgoCD detecta e aplica automaticamente.
+4. **Aguarde 3 minutos** (ou force sync no dashboard) — ArgoCD detecta, aplica, e os Pods sobem com a nova versão.
+
+#### Opção B — Teste Rápido (sem buildar imagem)
+
+Se quer apenas validar que ArgoCD sincroniza mudanças sem buildar nova imagem:
+
+1. **Edite `deployment.yml`** — mude apenas `replicas: 2` para `replicas: 3`
+2. **Commit e push:**
+
+```bash
+git add deployment.yml
+git commit -m "scale to 3 replicas"
+git push origin main
+```
+
+3. **Aguarde 3 minutos** — ArgoCD vai aplicar e você verá 3 Pods rodando em vez de 2.
+
+```bash
+kubectl get pods -l app=v3-app   # verá 3 Pods
+```
+
+**A essência é a mesma:** Git muda → ArgoCD sincroniza → cluster atualiza automaticamente.
 
 ### Teste 2: Delete um Pod no cluster
 

@@ -7,7 +7,7 @@ metadata:
     app: v3-app
     version: v3
 spec:
-  replicas: 2
+  replicas: 5
   selector:
     matchLabels:
       app: v3-app

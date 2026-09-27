@@ -164,13 +164,50 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443
 
 Acesse: **https://localhost:8080**
 
-A senha inicial é:
+A senha inicial pode ser obtida de **duas formas**:
+
+#### Opção A — Via CLI argocd (se instalado)
+
+Se você já tem o CLI do argocd instalado:
 
 ```bash
 argocd admin initial-password -n argocd
 ```
 
-Username: `admin` | Password: *(resultado do comando acima)*
+#### Opção B — Via kubectl (recomendado — sem dependências)
+
+Se o CLI não está instalado ou você prefere não instalar:
+
+```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+```
+
+Este comando extrai a senha do secret Kubernetes. Funciona sem instalar nada extra.
+
+#### Instalar o CLI argocd (opcional)
+
+Se quiser ter o CLI disponível para futuros comandos:
+
+**Linux:**
+```bash
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+argocd version  # verificar instalação
+```
+
+**macOS:**
+```bash
+brew install argocd
+```
+
+---
+
+**Para fazer login no dashboard:**
+
+- Username: `admin`
+- Password: *(resultado de uma das opções acima)*
+
+> 💡 Após login, é recomendável **mudar a senha** no dashboard: Settings → Accounts → Update password
 
 ---
 

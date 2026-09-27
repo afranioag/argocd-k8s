@@ -14,7 +14,7 @@ spec:
     # Apontando para este repositório
     repoURL: https://github.com/seu-usuario/seu-repo.git
     targetRevision: HEAD
-    path: subindo-kubernetes-simples/v3
+    path: .                    # raiz do repositório (os YAMLs estão aqui)
 
   destination:
     server: https://kubernetes.default.svc

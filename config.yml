@@ -12,7 +12,7 @@ spec:
 
   source:
     # Apontando para este repositório
-    repoURL: https://github.com/seu-usuario/seu-repo.git
+    repoURL: https://github.com/afranioag/argocd-k8s
     targetRevision: HEAD
     path: .                    # raiz do repositório (os YAMLs estão aqui)
 

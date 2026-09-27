@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: v3-app-service
+  namespace: default
+  labels:
+    app: v3-app
+spec:
+  selector:
+    app: v3-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer

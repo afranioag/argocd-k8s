@@ -1,0 +1,28 @@
+# Configuração ArgoCD v3
+# Este arquivo define a Aplicação ArgoCD que gerencia o deployment automático
+# baseado no estado do repositório Git
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: v3-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    # Apontando para este repositório
+    repoURL: https://github.com/seu-usuario/seu-repo.git
+    targetRevision: HEAD
+    path: subindo-kubernetes-simples/v3
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      prune: true      # remove recursos deletados do Git
+      selfHeal: true   # sincroniza automaticamente se cluster desviar de Git
+    syncOptions:
+    - CreateNamespace=true
